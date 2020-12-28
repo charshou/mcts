@@ -25,9 +25,11 @@ class MCTS(Player):
         self.opp = Player(3 - p)
         Player.__init__(self, p)
 
-    def get_move(self, state):
-        root = Node(None, state, self.opp)
-        for _ in range(50):  # TODO set range param
+    def getMove(self, state):
+        rootn = Node(None, state.clone(), self.opp)
+        for _ in range(2000):  # TODO set range param
+            root = rootn
+
             # selection
             while len(root.unexplored) == 0 and root.children:
                 root = max(
@@ -39,24 +41,36 @@ class MCTS(Player):
                 )
 
             # expansion
-            if root.unexplored and root.state.checkWin(root.player):
+            if root.unexplored and not root.state.checkWin(root.playermoved):
                 root = root.addChild(
                     choice(root.unexplored),
-                    self if root.player is self.opp else self.opp,
+                    root.state,
+                    self if root.playermoved is self.opp else self.opp,
                 )
 
             # simulation
-            for _ in range(100):
-                # TODO fill in simulation
-                pass
+            copyState, curr = root.state.clone(), root.playermoved
+            while (
+                not copyState.checkWin(curr)
+                and not len(copyState.availableMoves()) == 0
+            ):
+                move, curr = (
+                    choice(copyState.availableMoves()),
+                    self if root.playermoved is self.opp else self.opp,
+                )
+                copyState.makeMove(move, curr)
+            result = curr.p if copyState.checkWin(curr) else 0
 
             # backpropagation
-            while root.parent != None:
-                # TODO fill in backp
-                pass
+            while root != None:
+                root.update(result)
+                root = root.parent
+
+        selected = max(rootn.children, key=lambda x: x.wins / x.visits)
+        return selected.state.last
 
     def play(self, state):
-        pass
+        state.makeMove(self.getMove(state), self)
 
 
 class Node:
@@ -65,6 +79,7 @@ class Node:
         self.state = state
         self.wins = 0
         self.visits = 0
+        self.parent = parent
         self.playermoved = player
         self.unexplored = state.availableMoves()
 
@@ -79,4 +94,6 @@ class Node:
     def update(self, result):  # result is 1, 2, or 0
         if result == self.playermoved.p:
             self.wins += 1
+        elif result == 0:
+            self.wins += 0.3
         self.visits += 1

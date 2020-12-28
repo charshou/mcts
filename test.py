@@ -2,14 +2,18 @@ from games import *
 
 
 def main():
-    p1, p2 = Player(1), Player(2)
+    p1, p2 = MCTS(2, 2 ** 0.5), Player(1)
     curr = p1
     game = TicTacToe(3)
     while True:
-        game.display()
+        if not isinstance(curr, MCTS):
+            game.display()
         curr.play(game)
         if game.checkWin(curr):
             print(curr, "has won.")
+            break
+        elif not game.availableMoves():
+            print("Tie")
             break
         curr = p1 if curr is p2 else p2
 

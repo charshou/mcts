@@ -5,7 +5,7 @@ class Game:
         pass
 
     def checkWin(self, player):
-        # return true or false
+        # return true or false (checks win based off of self.last move)
         pass
 
     def makeMove(self, move, player):
@@ -13,7 +13,7 @@ class Game:
         pass
 
     def clone(self):
-        #creates copy of game
+        # creates copy of game
         pass
 
     def display(self):
