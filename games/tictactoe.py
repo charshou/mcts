@@ -1,4 +1,6 @@
 class TicTacToe:
+    sims = 4000
+
     def __init__(self, s):
         self.board = [[0] * s for _ in range(s)]
         self.last = [0, 0]
@@ -53,6 +55,5 @@ class TicTacToe:
         return copy
 
     def display(self):
-        print("{}  {}  {}".format(self.board[0][2], self.board[1][2], self.board[2][2]))
-        print("{}  {}  {}".format(self.board[0][1], self.board[1][1], self.board[2][1]))
-        print("{}  {}  {}".format(self.board[0][0], self.board[1][0], self.board[2][0]))
+        for i in reversed(range(self.s)):
+            print([self.board[j][i] for j in range(self.s)])

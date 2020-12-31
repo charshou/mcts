@@ -27,7 +27,7 @@ class MCTS(Player):
 
     def getMove(self, state):
         rootn = Node(None, state.clone(), self.opp)
-        for _ in range(2000):  # TODO set range param
+        for _ in range(type(state).sims):  # TODO set range param
             root = rootn
 
             # selection

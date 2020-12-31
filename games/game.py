@@ -1,5 +1,7 @@
 # general class definition of game
 class Game:
+    sims = 0  # factor for num of simulations
+
     def availableMoves(self):
         # returns list of available moves
         pass

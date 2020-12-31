@@ -2,7 +2,7 @@ from games import *
 
 
 def main():
-    p1, p2 = MCTS(2, 2 ** 0.5), Player(1)
+    p1, p2 = MCTS(1, 2 ** 0.5), MCTS(2, 2 ** 0.5)
     curr = p1
     game = TicTacToe(3)
     while True:
@@ -19,4 +19,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
