@@ -51,7 +51,7 @@ class TicTacToe:
 
     def clone(self):
         copy = TicTacToe(self.s)
-        copy.board, copy.last = [x[:] for x in self.board], self.last
+        copy.board, copy.last = [x[:] for x in self.board], self.last[:]
         return copy
 
     def display(self):

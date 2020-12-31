@@ -9,7 +9,7 @@ class Player:
 
     def play(self, state):
         avail = state.availableMoves()
-        print(avail)
+        print("Moves:", avail)
         m = int(input("Choose: "))
         while m < 0 or m >= len(avail):
             m = int(input("Choose: "))
